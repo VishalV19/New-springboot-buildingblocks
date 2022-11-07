@@ -1,14 +1,15 @@
 package com.restservices.entities;
 
-import java.io.StringReader;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.hibernate.type.TrueFalseType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 //Entity
 @Entity
@@ -19,9 +20,11 @@ public class User {
 	@GeneratedValue
 	private Long id;
 	
+	@NotEmpty ( message = "Username is Mandatory field. Please provide username")
 	@Column(name = "USER_NAME", length=50, nullable = false, unique = true)
 	private String username;
 	
+	@Size(min=2, message = "Firstname should have atleast 2 characters")
 	@Column(name = "FIRST_NAME", length=50, nullable = false)
 	private String firstname;
 	
@@ -37,6 +40,9 @@ public class User {
 	@Column(name="SSN", length = 50, nullable = false, unique = true)
 	private String ssn;
 
+	@OneToMany(mappedBy = "user")
+	private List <Order> orders;
+	
 	// No Argument Constructor
 	public User() {
 		
@@ -110,7 +116,15 @@ public class User {
 		this.ssn = ssn;
 	}
 
-	
+	// Generated getter & Setter for orders
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
 	//To String - Optional required for bean logging
 	@Override
 	public String toString() {
