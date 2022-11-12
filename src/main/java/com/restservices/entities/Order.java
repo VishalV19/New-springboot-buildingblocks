@@ -7,16 +7,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends ResourceSupport{
 
 	@Id
 	@GeneratedValue
-	private Long orderidLong;
-	private String orderdescriptionString;
+	private Long orderid;
+	private String orderdescription;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
@@ -31,19 +33,19 @@ public class Order {
 	
 	// Getters & Setters
 	public Long getOrderidLong() {
-		return orderidLong;
+		return orderid;
 	}
 
 	public void setOrderidLong(Long orderidLong) {
-		this.orderidLong = orderidLong;
+		this.orderid = orderidLong;
 	}
 
 	public String getOrderdescriptionString() {
-		return orderdescriptionString;
+		return orderdescription;
 	}
 
 	public void setOrderdescriptionString(String orderdescriptionString) {
-		this.orderdescriptionString = orderdescriptionString;
+		this.orderdescription = orderdescriptionString;
 	}
 
 	public User getUser() {
